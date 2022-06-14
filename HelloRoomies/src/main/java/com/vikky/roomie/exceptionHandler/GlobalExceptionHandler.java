@@ -18,5 +18,11 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<ResponseMessage>(
 				new ResponseMessage("user is not avaliable with given Id", "Error", ex.getMessage()), HttpStatus.NOT_FOUND);
 	}
+	
+	@ExceptionHandler(value = {UserAlreadyPresentException.class})
+	public ResponseEntity<ResponseMessage> userIsAlreadyPresent(UserAlreadyPresentException ex) {
+		return new ResponseEntity<ResponseMessage>(
+				new ResponseMessage("user is already avaliable with given Email Id", "Error", ex.getMessage()), HttpStatus.METHOD_NOT_ALLOWED);
+	}
 
 }

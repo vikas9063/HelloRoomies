@@ -1,23 +1,15 @@
-package com.vikky.roomie.modal;
+package com.vikky.roomie.dto;
 
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vikky.roomie.modal.Roles;
+import com.vikky.roomie.modal.UserRoles;
 
-@Entity
-public class RoomieUser {
+public class RoomieUserDto {
 
-	@Id
-	@GeneratedValue
 	private long id;
 	private String fname;
 	private String lname;
@@ -32,19 +24,11 @@ public class RoomieUser {
 	private String profile;
 	private Timestamp regDate;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "roomieUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<UserRoles> userRoles = new HashSet<UserRoles>();
+	private Set<UserRoles> roles = new HashSet<UserRoles>();
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<RoomieAddress> address = new HashSet<RoomieAddress>();
-
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<AddressProof> addressProof = new HashSet<>();
-
-	public RoomieUser(long id, String fname, String lname, String userEmail, String dob, String gender,
+	public RoomieUserDto(long id, String fname, String lname, String userEmail, String dob, String gender,
 			boolean isEnabled, boolean isDeleted, String mobileNo, String password, String about, String profile,
-			Timestamp regDate, Set<UserRoles> userRoles, Set<RoomieAddress> address, Set<AddressProof> addressProof) {
+			Timestamp regDate, Set<UserRoles> roles) {
 		super();
 		this.id = id;
 		this.fname = fname;
@@ -59,12 +43,10 @@ public class RoomieUser {
 		this.about = about;
 		this.profile = profile;
 		this.regDate = regDate;
-		this.userRoles = userRoles;
-		this.address = address;
-		this.addressProof = addressProof;
+		this.roles = roles;
 	}
 
-	public RoomieUser() {
+	public RoomieUserDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -173,28 +155,14 @@ public class RoomieUser {
 		this.regDate = regDate;
 	}
 
-	public Set<UserRoles> getUserRoles() {
-		return userRoles;
+	public Set<UserRoles> getRoles() {
+		return roles;
 	}
 
-	public void setUserRoles(Set<UserRoles> userRoles) {
-		this.userRoles = userRoles;
+	public void setRoles(Set<UserRoles> roles) {
+		this.roles = roles;
 	}
 
-	public Set<RoomieAddress> getAddress() {
-		return address;
-	}
-
-	public void setAddress(Set<RoomieAddress> address) {
-		this.address = address;
-	}
-
-	public Set<AddressProof> getAddressProof() {
-		return addressProof;
-	}
-
-	public void setAddressProof(Set<AddressProof> addressProof) {
-		this.addressProof = addressProof;
-	}
+	
 
 }

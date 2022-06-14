@@ -7,5 +7,8 @@ import com.vikky.roomie.modal.RoomieUser;
 
 @Repository
 public interface RoomieUserRepo extends JpaRepository<RoomieUser, Long>{
-
+	
+	public RoomieUser findByUserEmail(String email);
+	
+	
 }

@@ -1,32 +1,34 @@
 package com.vikky.roomie.modal;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class UserRoles {
 
 	@Id
-	@GeneratedValue()
-	private int roleId;
-	private int roleName;
-	private int roleDesc;
-	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JsonIgnore
-	private RoomieUser user;
+	@GeneratedValue
+	private int userRoleId;
 
-	public UserRoles(int roleId, int roleName, int roleDesc) {
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private RoomieUser roomieUser;
+
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Roles roles;
+
+	public UserRoles(int userRoleId, RoomieUser roomieUser, Roles roles) {
 		super();
-		this.roleId = roleId;
-		this.roleName = roleName;
-		this.roleDesc = roleDesc;
+		this.userRoleId = userRoleId;
+		this.roomieUser = roomieUser;
+		this.roles = roles;
 	}
 
 	public UserRoles() {
@@ -34,28 +36,28 @@ public class UserRoles {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getRoleId() {
-		return roleId;
+	public int getUserRoleId() {
+		return userRoleId;
 	}
 
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
+	public void setUserRoleId(int userRoleId) {
+		this.userRoleId = userRoleId;
 	}
 
-	public int getRoleName() {
-		return roleName;
+	public RoomieUser getRoomieUser() {
+		return roomieUser;
 	}
 
-	public void setRoleName(int roleName) {
-		this.roleName = roleName;
+	public void setRoomieUser(RoomieUser roomieUser) {
+		this.roomieUser = roomieUser;
 	}
 
-	public int getRoleDesc() {
-		return roleDesc;
+	public Roles getRoles() {
+		return roles;
 	}
 
-	public void setRoleDesc(int roleDesc) {
-		this.roleDesc = roleDesc;
+	public void setRoles(Roles roles) {
+		this.roles = roles;
 	}
 
 }
