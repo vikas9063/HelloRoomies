@@ -1,12 +1,13 @@
 package com.vikky.roomie.dto;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-
-import com.vikky.roomie.modal.Roles;
 import com.vikky.roomie.modal.UserRoles;
+
+import java.util.*;
 
 public class RoomieUserDto {
 
@@ -24,7 +25,9 @@ public class RoomieUserDto {
 	private String profile;
 	private Timestamp regDate;
 
-	private Set<UserRoles> roles = new HashSet<UserRoles>();
+	//private Set<UserRoles> roles = new HashSet<UserRoles>();
+
+	private List<Authority> authorities = new ArrayList<>();
 
 	public RoomieUserDto(long id, String fname, String lname, String userEmail, String dob, String gender,
 			boolean isEnabled, boolean isDeleted, String mobileNo, String password, String about, String profile,
@@ -43,7 +46,7 @@ public class RoomieUserDto {
 		this.about = about;
 		this.profile = profile;
 		this.regDate = regDate;
-		this.roles = roles;
+		//this.roles = roles;
 	}
 
 	public RoomieUserDto() {
@@ -155,14 +158,21 @@ public class RoomieUserDto {
 		this.regDate = regDate;
 	}
 
-	public Set<UserRoles> getRoles() {
-		return roles;
+	/*
+	 * public Set<UserRoles> getRoles() { return roles; }
+	 */
+
+	/*
+	 * public void setRoles(Set<UserRoles> roles) { this.roles = roles; }
+	 */
+	public List<Authority> getAuthorities() {
+		return authorities;
 	}
 
-	public void setRoles(Set<UserRoles> roles) {
-		this.roles = roles;
+	public void setAuthorities(List<Authority> authorities) {
+		this.authorities = authorities;
 	}
-
+	
 	
 
 }

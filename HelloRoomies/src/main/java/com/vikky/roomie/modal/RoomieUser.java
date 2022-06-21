@@ -1,8 +1,11 @@
 package com.vikky.roomie.modal;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,10 +14,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class RoomieUser {
+public class RoomieUser implements UserDetails {
 
 	@Id
 	@GeneratedValue
@@ -33,7 +40,7 @@ public class RoomieUser {
 	private Timestamp regDate;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "roomieUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "roomieUser", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<UserRoles> userRoles = new HashSet<UserRoles>();
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -195,6 +202,41 @@ public class RoomieUser {
 
 	public void setAddressProof(Set<AddressProof> addressProof) {
 		this.addressProof = addressProof;
+	}
+
+	// Security Provided methods
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+
+		List<SimpleGrantedAuthority> authorities = this.userRoles.stream().map((role) -> new SimpleGrantedAuthority(role.getRoles().getRoleName()))
+				.collect(Collectors.toList());
+
+		return authorities;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.userEmail;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 }
